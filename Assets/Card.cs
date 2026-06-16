@@ -13,8 +13,9 @@ public class Card : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D cardCollider;
 
-    private bool isFlipped = false;
-    private bool isMatched = false;
+    // 외부에서 매니저가 유연하게 통제할 수 있도록 변수를 public/내부 상태로 안전화
+    public bool isFlipped = false;
+    public bool isMatched = false;
 
     private void Awake()
     {
@@ -34,17 +35,14 @@ public class Card : MonoBehaviour
 
     private void Update()
     {
-        // 마우스 왼쪽 버튼 클릭 순간을 직접 감지
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
             if (isFlipped || isMatched) return;
 
-            // 스크린 마우스 좌표 -> 게임 월드 좌표 변환
             Vector2 mousePosition = Mouse.current.position.ReadValue();
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 0));
             Vector2 clickPos = new Vector2(worldPos.x, worldPos.y);
 
-            // 마우스 클릭 위치가 내 카드 콜라이더 영역 안인지 검사
             if (cardCollider != null && cardCollider.OverlapPoint(clickPos))
             {
                 TriggerCardClick();
@@ -54,14 +52,15 @@ public class Card : MonoBehaviour
 
     private void TriggerCardClick()
     {
-        // ⭐ 에러 원인 해결: CardGame 대신 CardGameManger를 찾도록 이름을 맞췄습니다!
         CardGameManger manager = Object.FindFirstObjectByType<CardGameManger>();
         if (manager != null)
         {
+            // 매니저에게 클릭 알림을 보냅니다. 뒤집는 연출은 매니저 판정 안에서 대행합니다.
             manager.CardSelected(this);
         }
     }
 
+    // 매니저에서 짝 검사 결과에 맞춰 앞/뒷면 유연하게 반전할 수 있도록 수정한 핵심 로직
     public void FlipCard()
     {
         isFlipped = !isFlipped;
