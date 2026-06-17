@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: b504bc21c962ea94cbd8568f8acbbcf3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardPrefab: {fileID: 2196094612795828746, guid: d90f7cd2d1cc43c4a9d41e50e2367f39, type: 3}
+  - cardParent: {instanceID: 0}
+  - cardBackSprite: {fileID: -5044639396517056953, guid: 5846353d4226cb842a165eb7d1f5669e, type: 3}
+  - wrongCountText: {instanceID: 0}
+  - timerText: {instanceID: 0}
+  - victoryCanvas: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
